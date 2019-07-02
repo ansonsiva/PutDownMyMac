@@ -10,6 +10,9 @@
 		383C964922CB3ADA005CC447 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383C964822CB3ADA005CC447 /* AppDelegate.swift */; };
 		383C964B22CB3ADB005CC447 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 383C964A22CB3ADB005CC447 /* Assets.xcassets */; };
 		383C964E22CB3ADB005CC447 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 383C964C22CB3ADB005CC447 /* Main.storyboard */; };
+		383C965722CB3D70005CC447 /* alarm.wav in Resources */ = {isa = PBXBuildFile; fileRef = 383C965622CB3D70005CC447 /* alarm.wav */; };
+		383C965922CB3D76005CC447 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 383C965822CB3D76005CC447 /* .gitignore */; };
+		383C965B22CB3D99005CC447 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 383C965A22CB3D99005CC447 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +22,9 @@
 		383C964D22CB3ADB005CC447 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		383C964F22CB3ADB005CC447 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		383C965022CB3ADB005CC447 /* PutDownMyMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PutDownMyMac.entitlements; sourceTree = "<group>"; };
+		383C965622CB3D70005CC447 /* alarm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = alarm.wav; sourceTree = "<group>"; };
+		383C965822CB3D76005CC447 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		383C965A22CB3D99005CC447 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +41,7 @@
 		383C963C22CB3ADA005CC447 = {
 			isa = PBXGroup;
 			children = (
+				383C965A22CB3D99005CC447 /* README.md */,
 				383C964722CB3ADA005CC447 /* PutDownMyMac */,
 				383C964622CB3ADA005CC447 /* Products */,
 			);
@@ -54,7 +61,9 @@
 				383C964822CB3ADA005CC447 /* AppDelegate.swift */,
 				383C964A22CB3ADB005CC447 /* Assets.xcassets */,
 				383C964C22CB3ADB005CC447 /* Main.storyboard */,
+				383C965622CB3D70005CC447 /* alarm.wav */,
 				383C964F22CB3ADB005CC447 /* Info.plist */,
+				383C965822CB3D76005CC447 /* .gitignore */,
 				383C965022CB3ADB005CC447 /* PutDownMyMac.entitlements */,
 			);
 			path = PutDownMyMac;
@@ -118,8 +127,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				383C965922CB3D76005CC447 /* .gitignore in Resources */,
 				383C964B22CB3ADB005CC447 /* Assets.xcassets in Resources */,
+				383C965B22CB3D99005CC447 /* README.md in Resources */,
 				383C964E22CB3ADB005CC447 /* Main.storyboard in Resources */,
+				383C965722CB3D70005CC447 /* alarm.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
