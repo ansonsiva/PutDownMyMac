@@ -7,12 +7,11 @@
 //
 
 import Cocoa
-import IOKit
 import IOKit.pwr_mgt
 import IOKit.ps
 import AVFoundation
-import AudioToolbox
-import CoreAudio
+//import AudioToolbox
+//import CoreAudio
 
 
 @NSApplicationMain
@@ -54,7 +53,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
     @IBAction func QuitPressed(_ sender: Any) {
-        setAudioVolume(volume: originVolume)
         NSApplication.shared.terminate(self)
     }
     
@@ -65,12 +63,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if isAlertOn {
             
             intervalTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(showAlert), userInfo: nil, repeats: true)
-            
         }else{
             intervalTimer?.invalidate()
-            if mainVolume != Float32(1.0){
-                setAudioVolume(volume: originVolume)
-            }
         }
     }
     
@@ -84,30 +78,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    fileprivate func setAudioVolume(volume:Float32) {
-        //获取音频设备
-        
-        var defaultOutputDeviceID = AudioDeviceID(0)
-        var defaultOutputDeviceIDSize = UInt32(MemoryLayout.size(ofValue: defaultOutputDeviceID))
-        
-        var getDefaultOutputDevicePropertyAddress = AudioObjectPropertyAddress(
-            mSelector: kAudioHardwarePropertyDefaultOutputDevice,
-            mScope: kAudioObjectPropertyScopeGlobal,
-            mElement: AudioObjectPropertyElement(kAudioObjectPropertyElementMaster))
-        
-        AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject),&getDefaultOutputDevicePropertyAddress,
-                                   0,nil,&defaultOutputDeviceIDSize,&defaultOutputDeviceID)
-        
-        
-        mainVolume = volume
-        var volumeSize = UInt32(MemoryLayout.size(ofValue: volume))
-        
-        var volumePropertyAddress = AudioObjectPropertyAddress(mSelector:kAudioHardwareServiceDeviceProperty_VirtualMasterVolume,mScope: kAudioDevicePropertyScopeOutput,mElement: kAudioObjectPropertyElementMaster)
-        //获取原音量
-        AudioObjectGetPropertyData(defaultOutputDeviceID, &volumePropertyAddress, 0, nil, &volumeSize, &originVolume)
-        //设置主音量
-        AudioObjectSetPropertyData(defaultOutputDeviceID,&volumePropertyAddress,0,nil,volumeSize,&mainVolume)
-    }
+//    fileprivate func setAudioVolume(volume:Float32) {
+//        //获取音频设备
+//
+//        var defaultOutputDeviceID = AudioDeviceID(0)
+//        var defaultOutputDeviceIDSize = UInt32(MemoryLayout.size(ofValue: defaultOutputDeviceID))
+//
+//        var getDefaultOutputDevicePropertyAddress = AudioObjectPropertyAddress(
+//            mSelector: kAudioHardwarePropertyDefaultOutputDevice,
+//            mScope: kAudioObjectPropertyScopeGlobal,
+//            mElement: AudioObjectPropertyElement(kAudioObjectPropertyElementMaster))
+//
+//        AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject),&getDefaultOutputDevicePropertyAddress,
+//                                   0,nil,&defaultOutputDeviceIDSize,&defaultOutputDeviceID)
+//
+//
+//        mainVolume = volume
+//        var volumeSize = UInt32(MemoryLayout.size(ofValue: volume))
+//
+//        var volumePropertyAddress = AudioObjectPropertyAddress(mSelector:kAudioHardwareServiceDeviceProperty_VirtualMasterVolume,mScope: kAudioDevicePropertyScopeOutput,mElement: kAudioObjectPropertyElementMaster)
+//        //获取原音量
+//        AudioObjectGetPropertyData(defaultOutputDeviceID, &volumePropertyAddress, 0, nil, &volumeSize, &originVolume)
+//        //设置主音量
+//
+//        AudioObjectSetPropertyData(defaultOutputDeviceID,&volumePropertyAddress,0,nil,volumeSize,&mainVolume)
+//
+//    }
     
     fileprivate func noSleep() {
         var assertionID: IOPMAssertionID = 0
@@ -129,24 +125,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         icon?.isTemplate = true
         statusItem.button?.image = icon
         statusItem.menu = AlertMenu
+        
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
-        setAudioVolume(volume: originVolume)
     }
     
     
     @objc func showAlert(){
         if getPowerStatus() == .battery {
-            setAudioVolume(volume: 1.0)
             print("your mac is lost")
             soundPlay()
         }
-        
+//        setAudioVolume(volume: originVolume)
     }
     
     fileprivate func soundPlay() {
-        
         let url = URL(fileURLWithPath: Bundle.main.path(forResource: "alarm", ofType: "wav")!)
         do {
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
@@ -154,7 +148,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } catch _{
             return
         }
+//        setAudioVolume(volume: 1.0)
         player?.play()
+//        sleep(3)
+//        setAudioVolume(volume: originVolume)
     }
     
     fileprivate func showAlertPopWindow(question: String, text: String) -> Bool {
