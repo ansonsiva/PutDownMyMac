@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11134" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14810.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11134"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14810.12"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -673,9 +674,36 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="PutDownMyMac" customModuleProvider="target">
+                    <connections>
+                        <outlet property="AlertButton" destination="Ddk-4s-RI4" id="ZRc-0r-eJr"/>
+                        <outlet property="AlertMenu" destination="FQB-ts-uoH" id="zDE-Fe-w2H"/>
+                        <outlet property="PreferencesButton" destination="fJp-QY-59d" id="16S-Em-Yzv"/>
+                        <outlet property="QuitButton" destination="bRd-GP-OQ3" id="kKt-zh-azv"/>
+                    </connections>
+                </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <menu id="FQB-ts-uoH">
+                    <items>
+                        <menuItem title="Alert On" id="Ddk-4s-RI4">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="AlertToggle:" target="Voe-Tx-rLC" id="aJG-aX-NCd"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Preferences" keyEquivalent="," id="fJp-QY-59d">
+                            <connections>
+                                <action selector="PreferencesPressed:" target="Voe-Tx-rLC" id="GwI-S6-VVP"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Quit" keyEquivalent="q" id="bRd-GP-OQ3">
+                            <connections>
+                                <action selector="QuitPressed:" target="Voe-Tx-rLC" id="9aK-Np-ozW"/>
+                            </connections>
+                        </menuItem>
+                    </items>
+                </menu>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
         </scene>
@@ -703,7 +731,7 @@
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="PutDownMyMac" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>

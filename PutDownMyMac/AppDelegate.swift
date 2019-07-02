@@ -23,7 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var player: AVAudioPlayer?
     let icon = NSImage(named: "record")
     var isAlertOn = false
-    var originVolume = Float32(0.0)
+    var originVolume = Float32(0.5)
     var mainVolume = Float32(0.0)
     
     enum batteryStatus {
@@ -31,7 +31,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         case ac
     }
     
-    @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var AlertButton: NSMenuItem!
     @IBOutlet weak var PreferencesButton: NSMenuItem!
     @IBOutlet weak var QuitButton: NSMenuItem!
