@@ -10,6 +10,7 @@ import Cocoa
 import IOKit.pwr_mgt
 import IOKit.ps
 import AVFoundation
+import CoreWLAN
 //import AudioToolbox
 //import CoreAudio
 
@@ -24,7 +25,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var isAlertOn = false
     var originVolume = Float32(0.5)
     var mainVolume = Float32(0.0)
-    
+    let userdefault = UserDefaults.standard
+    var currentWifi = CWWiFiClient.shared().interface()?.ssid() ?? "no wifi"
+    var wifiList = [String]()
+
     enum batteryStatus {
         case battery
         case ac
@@ -125,6 +129,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         icon?.isTemplate = true
         statusItem.button?.image = icon
         statusItem.menu = AlertMenu
+        userdefault.register(defaults: ["wifiLists" : [String]()])
         
     }
     
@@ -133,7 +138,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
     @objc func showAlert(){
-        if getPowerStatus() == .battery {
+        wifiList = userdefault.stringArray(forKey: "wifiLists") ?? [""]
+        if getPowerStatus() == .battery && !wifiList.contains(currentWifi) {
             print("your mac is lost")
             soundPlay()
         }
