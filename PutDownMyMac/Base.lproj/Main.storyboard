@@ -154,17 +154,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Edc-E6-Bb9">
-                                <rect key="frame" x="49" y="235" width="82" height="16"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Alarm Sound" id="cgo-kO-taC">
-                                    <font key="font" usesAppearanceFont="YES"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
+                            <stackView distribution="fill" orientation="horizontal" alignment="bottom" spacing="44" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qch-NS-S9O">
+                                <rect key="frame" x="56" y="244" width="338" height="16"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Edc-E6-Bb9">
+                                        <rect key="frame" x="-2" y="0.0" width="88" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Alarm Volume" id="cgo-kO-taC">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3cV-ui-Iff">
+                                        <rect key="frame" x="126" y="-2" width="214" height="19"/>
+                                        <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" sliderType="linear" id="Azq-fM-7En"/>
+                                        <connections>
+                                            <action selector="volumeChange:" target="pXf-DK-ZaO" id="K5a-93-Uu5"/>
+                                        </connections>
+                                    </slider>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="Qch-NS-S9O" firstAttribute="leading" secondItem="rmv-p9-fn5" secondAttribute="leading" constant="56" id="Tmh-hb-PrG"/>
+                            <constraint firstItem="Qch-NS-S9O" firstAttribute="top" secondItem="rmv-p9-fn5" secondAttribute="top" constant="40" id="ToI-rB-cIr"/>
+                            <constraint firstItem="Qch-NS-S9O" firstAttribute="centerX" secondItem="rmv-p9-fn5" secondAttribute="centerX" id="hUl-s3-Vse"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="volumeSlider" destination="3cV-ui-Iff" id="I0d-JM-LCf"/>
+                    </connections>
                 </viewController>
                 <customObject id="zkV-jb-iu0" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -217,13 +244,13 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="3M5-gb-teA" viewBased="YES" id="MyU-2J-0ZO">
-                                            <rect key="frame" x="0.0" y="0.0" width="450" height="258"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="448" height="258"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn identifier="WifiList" editable="NO" width="447" minWidth="40" maxWidth="1000" id="Zte-jX-HZT">
+                                                <tableColumn identifier="WifiList" editable="NO" width="445" minWidth="40" maxWidth="1000" id="Zte-jX-HZT">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="The Wifi list below won't trigger Alert!">
                                                         <font key="font" metaFont="message" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -237,11 +264,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="Z2P-Ys-4UB">
-                                                            <rect key="frame" x="1" y="1" width="447" height="17"/>
+                                                            <rect key="frame" x="1" y="1" width="445" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ghw-nr-Nu8">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="447" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="445" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="X6f-M0-pQ9">
                                                                         <font key="font" metaFont="system"/>
@@ -264,7 +291,7 @@
                                         </tableView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="pP7-pp-Rab">
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="pP7-pp-Rab">
                                     <rect key="frame" x="1" y="267" width="448" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -273,7 +300,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" id="3M5-gb-teA">
-                                    <rect key="frame" x="0.0" y="0.0" width="450" height="25"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="448" height="25"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>

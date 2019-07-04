@@ -11,8 +11,7 @@ import IOKit.pwr_mgt
 import IOKit.ps
 import AVFoundation
 import CoreWLAN
-//import AudioToolbox
-//import CoreAudio
+import AudioToolbox
 
 
 @NSApplicationMain
@@ -23,11 +22,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var player: AVAudioPlayer?
     let icon = NSImage(named: "record")
     var isAlertOn = false
-    var originVolume = Float32(0.5)
-    var mainVolume = Float32(0.0)
+    var mainVolume:Float = 0.5
     let userdefault = UserDefaults.standard
     var currentWifi = CWWiFiClient.shared().interface()?.ssid() ?? "no wifi"
     var wifiList = [String]()
+    
+    
 
     enum batteryStatus {
         case battery
@@ -40,20 +40,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var AlertMenu: NSMenu!
     
     @IBAction func AlertToggle(_ sender: Any) {
+        
         if getPowerStatus() == .ac {
             isAlertOn.toggle()
             noSleep()
             setAlert(AlertState: isAlertOn)
+            
+ 
         }else{
             if !isAlertOn {
                 let _ = showAlertPopWindow(question: "Please plug in the AC", text: "Plug in the AC to use the alert")
             }
         }
-    }
-    
-    @IBAction func PreferencesPressed(_ sender: Any) {
+        
         
     }
+    
     
     
     @IBAction func QuitPressed(_ sender: Any) {
@@ -65,7 +67,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         AlertButton.title = isAlertOn ? "Alert Off":"Alert On"
         statusItem.button?.image = NSImage.init(named: isAlertOn ? "recording":"record")
         if isAlertOn {
-            
             intervalTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(showAlert), userInfo: nil, repeats: true)
         }else{
             intervalTimer?.invalidate()
@@ -82,33 +83,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-//    fileprivate func setAudioVolume(volume:Float32) {
-//        //获取音频设备
-//
-//        var defaultOutputDeviceID = AudioDeviceID(0)
-//        var defaultOutputDeviceIDSize = UInt32(MemoryLayout.size(ofValue: defaultOutputDeviceID))
-//
-//        var getDefaultOutputDevicePropertyAddress = AudioObjectPropertyAddress(
-//            mSelector: kAudioHardwarePropertyDefaultOutputDevice,
-//            mScope: kAudioObjectPropertyScopeGlobal,
-//            mElement: AudioObjectPropertyElement(kAudioObjectPropertyElementMaster))
-//
-//        AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject),&getDefaultOutputDevicePropertyAddress,
-//                                   0,nil,&defaultOutputDeviceIDSize,&defaultOutputDeviceID)
-//
-//
-//        mainVolume = volume
-//        var volumeSize = UInt32(MemoryLayout.size(ofValue: volume))
-//
-//        var volumePropertyAddress = AudioObjectPropertyAddress(mSelector:kAudioHardwareServiceDeviceProperty_VirtualMasterVolume,mScope: kAudioDevicePropertyScopeOutput,mElement: kAudioObjectPropertyElementMaster)
-//        //获取原音量
-//        AudioObjectGetPropertyData(defaultOutputDeviceID, &volumePropertyAddress, 0, nil, &volumeSize, &originVolume)
-//        //设置主音量
-//
-//        AudioObjectSetPropertyData(defaultOutputDeviceID,&volumePropertyAddress,0,nil,volumeSize,&mainVolume)
-//
-//    }
-    
+    //禁止休眠
     fileprivate func noSleep() {
         var assertionID: IOPMAssertionID = 0
         var sleepDisabled = false
@@ -121,8 +96,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             IOPMAssertionRelease(assertionID)
             sleepDisabled = false
         }
-        
     }
+    
+    
+    
+    
+    
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         AlertButton.title = "Alert On"
@@ -130,6 +109,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.button?.image = icon
         statusItem.menu = AlertMenu
         userdefault.register(defaults: ["wifiLists" : [String]()])
+        userdefault.register(defaults: ["alartVolume" : Float()])
         
     }
     
@@ -142,22 +122,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if getPowerStatus() == .battery && !wifiList.contains(currentWifi) {
             print("your mac is lost")
             soundPlay()
-        }
-//        setAudioVolume(volume: originVolume)
+        } 
     }
+    
     
     fileprivate func soundPlay() {
         let url = URL(fileURLWithPath: Bundle.main.path(forResource: "alarm", ofType: "wav")!)
+        mainVolume = userdefault.float(forKey: "alartVolume")
         do {
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
-            player?.volume = 1
         } catch _{
             return
         }
-//        setAudioVolume(volume: 1.0)
+//        player?.setVolume(mainVolume,fadeDuration: 0)
+        player?.volume = mainVolume
         player?.play()
+        
 //        sleep(3)
-//        setAudioVolume(volume: originVolume)
     }
     
     fileprivate func showAlertPopWindow(question: String, text: String) -> Bool {

@@ -9,10 +9,22 @@
 import Cocoa
 
 class GeneralController: NSViewController {
-
+    @IBOutlet weak var volumeSlider: NSSlider!
+    let userdefault = UserDefaults.standard
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+    }
+    
+    override func viewWillAppear() {
+        volumeSlider.floatValue = userdefault.float(forKey: "alartVolume")
+    }
+    
+    @IBAction func volumeChange(_ sender: NSSlider) {
+        userdefault.set(Float(sender.floatValue), forKey: "alartVolume")
+        print(sender.floatValue)
     }
     
 }

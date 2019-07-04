@@ -20,4 +20,9 @@ class PreferencesViewController: NSViewController {
         let window = self.view.window
         window?.styleMask.remove(.resizable)
     }
+    
+    override func viewWillAppear() {
+        let window = self.view.window
+        window?.makeKeyAndOrderFront(self)
+    }
 }
